@@ -92,6 +92,9 @@ public final class JjwtTokenEncoder implements TokenEncoder {
             jwtBuilder.notBefore(notBefore);
         }
 
+        data.values()
+            .forEach(jwtBuilder::claim);
+
         token = jwtBuilder.signWith(key, Jwts.SIG.HS512)
             .compact();
 

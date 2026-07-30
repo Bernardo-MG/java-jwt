@@ -2,9 +2,12 @@
 package com.bernardomg.jwt.encoding.jjwt;
 
 import java.time.Instant;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.crypto.SecretKey;
 
@@ -22,6 +25,22 @@ import io.jsonwebtoken.Jwts;
  *
  */
 public final class JjwtTokenDecoder implements TokenDecoder {
+
+    private static final Collection<String> MANAGED_CLAIMS = Set.of(Claims.ID, Claims.SUBJECT, Claims.ISSUER,
+        Claims.ISSUED_AT, Claims.NOT_BEFORE, Claims.EXPIRATION, Claims.AUDIENCE, "permissions");
+
+    private static Map<String, String> readValues(final Claims claims) {
+        final Map<String, String> values;
+
+        values = new HashMap<>();
+        claims.forEach((name, value) -> {
+            if (!MANAGED_CLAIMS.contains(name) && value instanceof final String stringValue) {
+                values.put(name, stringValue);
+            }
+        });
+
+        return Map.copyOf(values);
+    }
 
     /**
      * JWT parser for reading tokens.
@@ -64,6 +83,7 @@ public final class JjwtTokenDecoder implements TokenDecoder {
         final Instant                   expiration;
         final Instant                   notBefore;
         final Map<String, List<String>> permissions;
+        final Map<String, String>       values;
 
         // Acquire claims
         claims = parser.parseSignedClaims(token)
@@ -100,8 +120,10 @@ public final class JjwtTokenDecoder implements TokenDecoder {
             permissions = null;
         }
 
+        values = readValues(claims);
+
         return new JwtTokenData(claims.getId(), claims.getSubject(), claims.getIssuer(), issuedAt, notBefore,
-            expiration, claims.getAudience(), permissions);
+            expiration, claims.getAudience(), permissions, values);
     }
 
 }

@@ -9,6 +9,8 @@ public final class JwtTokens {
 
     public static final String WITH_AUDIENCE             = "eyJhbGciOiJIUzUxMiJ9.eyJhdWQiOlsiYXVkaWVuY2UiXX0.MC9oB7dYxYp6yrzZwKazSZ484NUwTQrs_sgAMeBdVPMpF0aU83GRF3fLD8FhiamG5f0yWH6LxsWUUARVqdA6pA";
 
+    public static final String WITH_CUSTOM_VALUE         = "eyJhbGciOiJIUzUxMiJ9.eyJrZXkiOiJ2YWx1ZSJ9.OFT4xa37aux54ZjvwIv33lJnZBTZIpTi_1GP0i72T_HoelPjNeHzo4Q3P0-SYwEK4MIqMgJsQKszawiIpSsdmQ";
+
     public static final String WITH_ISSUED_AT            = "eyJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE1ODA1MTE2MDB9.IhZC1OlKyZIDBf7v1_4Eo_yjzX6f4pujK4Rr4T-d3ArtSg0qzHhyPVImWhsMeT2BGh6ET03bfzPfty4BTlgfOQ";
 
     public static final String WITH_ISSUER               = "eyJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJpc3N1ZXIifQ.PH60Xpv3vcGpi50DTUVZE0lGKi5r2wsJwLQWk2Vm_Wg8YBQdTfobnoYie8wfgsyKNoM_j21B_riBWMIyEcYTDA";

@@ -46,6 +46,25 @@ class TestJjwtTokenDecoderDecode {
     }
 
     @Test
+    @DisplayName("Recovers the custom values from a token")
+    void testDecode_CustomValue() {
+        final String              token;
+        final Map<String, String> values;
+
+        // GIVEN
+        token = JwtTokens.WITH_CUSTOM_VALUE;
+
+        // WHEN
+        values = decoder.decode(token)
+            .values();
+
+        // THEN
+        Assertions.assertThat(values)
+            .as("values")
+            .containsExactlyEntriesOf(Map.of(Tokens.CUSTOM_KEY, Tokens.CUSTOM_VALUE));
+    }
+
+    @Test
     @DisplayName("An empty token generates an exception")
     void testDecode_Empty() {
         final String           token;

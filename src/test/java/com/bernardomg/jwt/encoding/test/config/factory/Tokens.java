@@ -15,6 +15,10 @@ public final class Tokens {
 
     public static final String    AUDIENCE        = "audience";
 
+    public static final String    CUSTOM_KEY      = "key";
+
+    public static final String    CUSTOM_VALUE    = "value";
+
     public static final Instant   ISSUED_AT       = LocalDate.of(2020, Month.FEBRUARY, 1)
         .atStartOfDay(ZoneId.systemDefault())
         .toInstant();
