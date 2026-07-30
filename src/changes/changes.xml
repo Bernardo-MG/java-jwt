@@ -10,7 +10,10 @@
                 First release of the library.
             </action>
         </release>
-        <release version="1.1.0" date="2026-07-18" description="">
+        <release version="1.0.1" date="2026-07-24" description="Token data object validates itself">
+            <action dev="bmg" type="update">
+                Token data object validates itself.
+            </action>
         </release>
     </body>
 </document>
