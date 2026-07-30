@@ -44,7 +44,7 @@ class TestJjwtTokenEncoderEncode {
 
     @Test
     @DisplayName("Encodes expiration")
-    void testEncode_Expiration() {
+    void testEncode_ExpirationDate() {
         final Claims claims;
 
         // WHEN
@@ -117,15 +117,16 @@ class TestJjwtTokenEncoderEncode {
     @Test
     @DisplayName("Encodes a token valid after a past date")
     void testEncode_NotBeforeInPast() {
-        final String token;
+        final Claims claims;
 
-        // GIVEN
-        token = encoder.encode(JwtTokenDatas.notBeforeInPast());
+        // WHEN
+        claims = parse(encoder.encode(JwtTokenDatas.notBeforeInPast()));
 
-        // WHEN / THEN
-        Assertions.assertThatCode(() -> parse(token))
-            .as("token with not-before date in the past")
-            .doesNotThrowAnyException();
+        // THEN
+        Assertions.assertThat(claims.getNotBefore()
+            .toInstant())
+            .as("not before")
+            .isEqualTo(Tokens.NOT_BEFORE);
     }
 
     @Test

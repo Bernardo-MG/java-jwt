@@ -36,8 +36,7 @@ public final class JwtTokenDatas {
     }
 
     public static final JwtTokenData notBeforeInPast() {
-        return new JwtTokenData(null, null, null, null, Instant.now()
-            .minusSeconds(60), null, List.of(), Map.of(), Map.of());
+        return new JwtTokenData(null, null, null, null, Tokens.NOT_BEFORE, null, List.of(), Map.of(), Map.of());
     }
 
     public static final JwtTokenData notExpired() {
