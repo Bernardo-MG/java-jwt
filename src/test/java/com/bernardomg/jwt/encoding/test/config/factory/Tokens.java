@@ -5,7 +5,7 @@ import java.nio.charset.Charset;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.ZoneId;
+import java.time.ZoneOffset;
 
 import javax.crypto.SecretKey;
 
@@ -15,8 +15,16 @@ public final class Tokens {
 
     public static final String    AUDIENCE        = "audience";
 
+    public static final String    CUSTOM_KEY      = "key";
+
+    public static final String    CUSTOM_VALUE    = "value";
+
+    public static final Instant   EXPIRATION_DATE = LocalDate.of(2100, 1, 1)
+        .atStartOfDay(ZoneOffset.UTC)
+        .toInstant();
+
     public static final Instant   ISSUED_AT       = LocalDate.of(2020, Month.FEBRUARY, 1)
-        .atStartOfDay(ZoneId.systemDefault())
+        .atStartOfDay(ZoneOffset.UTC)
         .toInstant();
 
     public static final String    ISSUER          = "issuer";
@@ -25,13 +33,8 @@ public final class Tokens {
         "1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890"
             .getBytes(Charset.forName("UTF-8")));
 
-    public static final Instant   NEXT_MONTH_DATE = LocalDate.now()
-        .plusMonths(1)
-        .atStartOfDay(ZoneId.systemDefault())
-        .toInstant();
-
     public static final Instant   NOT_BEFORE      = LocalDate.of(2020, Month.FEBRUARY, 1)
-        .atStartOfDay(ZoneId.systemDefault())
+        .atStartOfDay(ZoneOffset.UTC)
         .toInstant();
 
     public static final String    SUBJECT         = "subject";

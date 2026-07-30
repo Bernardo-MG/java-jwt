@@ -17,7 +17,8 @@ import org.slf4j.LoggerFactory;
  *
  */
 public record JwtTokenData(String id, String subject, String issuer, Instant issuedAt, Instant notBefore,
-        Instant expiration, Collection<String> audience, Map<String, List<String>> permissions) {
+        Instant expiration, Collection<String> audience, Map<String, List<String>> permissions,
+        Map<String, String> values) {
 
     /**
      * Logger for the class.
@@ -26,7 +27,7 @@ public record JwtTokenData(String id, String subject, String issuer, Instant iss
 
     public JwtTokenData(final String id, final String subject, final String issuer, final Instant issuedAt,
             final Instant notBefore, final Instant expiration, final Collection<String> audience,
-            final Map<String, List<String>> permissions) {
+            final Map<String, List<String>> permissions, final Map<String, String> values) {
         // TODO: reject nulls, use optionals
 
         this.id = id;
@@ -48,6 +49,12 @@ public record JwtTokenData(String id, String subject, String issuer, Instant iss
             this.permissions = permissions.entrySet()
                 .stream()
                 .collect(Collectors.toUnmodifiableMap(Map.Entry::getKey, e -> List.copyOf(e.getValue())));
+        }
+
+        if (values == null) {
+            this.values = Map.of();
+        } else {
+            this.values = Map.copyOf(values);
         }
     }
 

@@ -1,7 +1,7 @@
 
 package com.bernardomg.jwt.encoding.jjwt;
 
-import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.Objects;
 
@@ -71,7 +71,7 @@ public final class JjwtTokenEncoder implements TokenEncoder {
         // Issued at
         if (data.issuedAt() != null) {
             issuedAt = java.util.Date.from(data.issuedAt()
-                .atZone(ZoneId.systemDefault())
+                .atZone(ZoneOffset.UTC)
                 .toInstant());
             jwtBuilder.issuedAt(issuedAt);
         }
@@ -79,7 +79,7 @@ public final class JjwtTokenEncoder implements TokenEncoder {
         // Expiration
         if (data.expiration() != null) {
             expiration = java.util.Date.from(data.expiration()
-                .atZone(ZoneId.systemDefault())
+                .atZone(ZoneOffset.UTC)
                 .toInstant());
             jwtBuilder.expiration(expiration);
         }
@@ -87,10 +87,13 @@ public final class JjwtTokenEncoder implements TokenEncoder {
         // Not before
         if (data.notBefore() != null) {
             notBefore = java.util.Date.from(data.notBefore()
-                .atZone(ZoneId.systemDefault())
+                .atZone(ZoneOffset.UTC)
                 .toInstant());
             jwtBuilder.notBefore(notBefore);
         }
+
+        data.values()
+            .forEach(jwtBuilder::claim);
 
         token = jwtBuilder.signWith(key, Jwts.SIG.HS512)
             .compact();
