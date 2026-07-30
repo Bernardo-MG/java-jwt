@@ -1,17 +1,15 @@
 
 package com.bernardomg.jwt.encoding.test.unit.jjwt;
 
-import java.time.Instant;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.bernardomg.jwt.encoding.JwtTokenData;
 import com.bernardomg.jwt.encoding.TokenDecoder;
 import com.bernardomg.jwt.encoding.jjwt.JjwtTokenDecoder;
 import com.bernardomg.jwt.encoding.test.config.factory.JwtTokens;
@@ -29,18 +27,17 @@ class TestJjwtTokenDecoderDecode {
     @Test
     @DisplayName("Recovers the audience from a token")
     void testDecode_Audience() {
-        final String             token;
-        final Collection<String> audience;
+        final String       token;
+        final JwtTokenData tokenData;
 
         // GIVEN
         token = JwtTokens.WITH_AUDIENCE;
 
         // WHEN
-        audience = decoder.decode(token)
-            .audience();
+        tokenData = decoder.decode(token);
 
         // THEN
-        Assertions.assertThat(audience)
+        Assertions.assertThat(tokenData.audience())
             .as("audience")
             .containsExactly(Tokens.AUDIENCE);
     }
@@ -48,18 +45,17 @@ class TestJjwtTokenDecoderDecode {
     @Test
     @DisplayName("Recovers the custom values from a token")
     void testDecode_CustomValue() {
-        final String              token;
-        final Map<String, String> values;
+        final String       token;
+        final JwtTokenData tokenData;
 
         // GIVEN
         token = JwtTokens.WITH_CUSTOM_VALUE;
 
         // WHEN
-        values = decoder.decode(token)
-            .values();
+        tokenData = decoder.decode(token);
 
         // THEN
-        Assertions.assertThat(values)
+        Assertions.assertThat(tokenData.values())
             .as("values")
             .containsExactlyEntriesOf(Map.of(Tokens.CUSTOM_KEY, Tokens.CUSTOM_VALUE));
     }
@@ -82,6 +78,24 @@ class TestJjwtTokenDecoderDecode {
     }
 
     @Test
+    @DisplayName("Recovers the expiration date from a token")
+    void testDecode_ExpirationDate() {
+        final String       token;
+        final JwtTokenData tokenData;
+
+        // GIVEN
+        token = JwtTokens.EXPIRATION_DATE;
+
+        // WHEN
+        tokenData = decoder.decode(token);
+
+        // THEN
+        Assertions.assertThat(tokenData.expiration())
+            .as("subject")
+            .isEqualTo(Tokens.EXPIRATION_DATE);
+    }
+
+    @Test
     @DisplayName("Decoding an expired token generates an exception")
     void testDecode_Expired() {
         final String           token;
@@ -100,20 +114,18 @@ class TestJjwtTokenDecoderDecode {
 
     @Test
     @DisplayName("Recovers the issued at from a token")
-    @Disabled("The date check is failing due to timezones")
     void testDecode_IssuedAt() {
-        final String  token;
-        final Instant issuedAt;
+        final String       token;
+        final JwtTokenData tokenData;
 
         // GIVEN
         token = JwtTokens.WITH_ISSUED_AT;
 
         // WHEN
-        issuedAt = decoder.decode(token)
-            .issuedAt();
+        tokenData = decoder.decode(token);
 
         // THEN
-        Assertions.assertThat(issuedAt)
+        Assertions.assertThat(tokenData.issuedAt())
             .as("issued at")
             .isEqualTo(Tokens.ISSUED_AT);
     }
@@ -121,38 +133,35 @@ class TestJjwtTokenDecoderDecode {
     @Test
     @DisplayName("Recovers the issuer from a token")
     void testDecode_Issuer() {
-        final String token;
-        final String subject;
+        final String       token;
+        final JwtTokenData tokenData;
 
         // GIVEN
         token = JwtTokens.WITH_ISSUER;
 
         // WHEN
-        subject = decoder.decode(token)
-            .issuer();
+        tokenData = decoder.decode(token);
 
         // THEN
-        Assertions.assertThat(subject)
+        Assertions.assertThat(tokenData.issuer())
             .as("issuer")
             .isEqualTo(Tokens.ISSUER);
     }
 
     @Test
     @DisplayName("Recovers the not before date from a token")
-    @Disabled("The date check is failing due to timezones")
     void testDecode_NotBefore() {
-        final String  token;
-        final Instant notBefore;
+        final String       token;
+        final JwtTokenData tokenData;
 
         // GIVEN
         token = JwtTokens.WITH_NOT_BEFORE_IN_PAST;
 
         // WHEN
-        notBefore = decoder.decode(token)
-            .notBefore();
+        tokenData = decoder.decode(token);
 
         // THEN
-        Assertions.assertThat(notBefore)
+        Assertions.assertThat(tokenData.notBefore())
             .as("not before")
             .isEqualTo(Tokens.NOT_BEFORE);
     }
@@ -160,18 +169,17 @@ class TestJjwtTokenDecoderDecode {
     @Test
     @DisplayName("Recovers the permissions from a token")
     void testDecode_Permissions() {
-        final String                    token;
-        final Map<String, List<String>> permissions;
+        final String       token;
+        final JwtTokenData tokenData;
 
         // GIVEN
         token = JwtTokens.WITH_PERMISSIONS;
 
         // WHEN
-        permissions = decoder.decode(token)
-            .permissions();
+        tokenData = decoder.decode(token);
 
         // THEN
-        Assertions.assertThat(permissions)
+        Assertions.assertThat(tokenData.permissions())
             .as("permissions")
             .containsExactlyEntriesOf(Map.of(PermissionConstants.DATA, List.of(PermissionConstants.READ)));
     }
@@ -179,18 +187,17 @@ class TestJjwtTokenDecoderDecode {
     @Test
     @DisplayName("Recovers the subject from a token")
     void testDecode_Subject() {
-        final String token;
-        final String subject;
+        final String       token;
+        final JwtTokenData tokenData;
 
         // GIVEN
         token = JwtTokens.WITH_SUBJECT;
 
         // WHEN
-        subject = decoder.decode(token)
-            .subject();
+        tokenData = decoder.decode(token);
 
         // THEN
-        Assertions.assertThat(subject)
+        Assertions.assertThat(tokenData.subject())
             .as("subject")
             .isEqualTo(Tokens.SUBJECT);
     }

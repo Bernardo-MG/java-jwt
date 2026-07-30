@@ -5,6 +5,8 @@ public final class JwtTokens {
 
     public static final String EMPTY                     = "eyJhbGciOiJIUzUxMiJ9..BZwJ1TnPaPg1jkp7l8Y7qj-jHXWkTP6TXYAElGiAlFz-bWL6aPq8-T8nWAT0G_QkZYQ2bPizJdSPcNuAXCLwvQ";
 
+    public static final String EXPIRATION_DATE           = "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjQxMDI0NDEyMDB9.lU8M10AtUZ_pjdRfLIarqyvHWr25Kbw__2qcdoFP9x4Vt_cWwUUGA0vq26OelQV3OnllDb5G9YBWBZnxy0LIAw";
+
     public static final String EXPIRED                   = "eyJhbGciOiJIUzUxMiJ9.eyJleHAiOjE1ODA1MTE2MDB9.uQag93K8bdiHFFMJAx-9s0JTZ6-3fQOWfLbdXwimbg84A68BulI1RMftGZyZt7UmL_QoEQb3Z6lG_aL_4P_Kkg";
 
     public static final String WITH_AUDIENCE             = "eyJhbGciOiJIUzUxMiJ9.eyJhdWQiOlsiYXVkaWVuY2UiXX0.MC9oB7dYxYp6yrzZwKazSZ484NUwTQrs_sgAMeBdVPMpF0aU83GRF3fLD8FhiamG5f0yWH6LxsWUUARVqdA6pA";
